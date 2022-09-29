@@ -12,11 +12,6 @@
 #
 ##################################################################################################
 
-#Print usage
-#usage="usage:$0 [adaptor_file_in_fqtrim_format] [output suffix,e.g:trimmed.fastq.gz] [input:R1.fq,R2.fq (fa,fq,fq.gz,single or PE)] [--outdir: Output directory for the files]"
-#[[ -z $1 ]] && { echo -e "$usage"; exit; }
-#[[ -z $2 ]] && { echo -e "Missing output suffix\n$usage"; exit; }
-#[[ -z $3 ]] && { echo -e "Missing input files\n$usage"; exit; }
 
 module load r/4.0.3
 export LD_LIBRARY_PATH=/usr/local/packages/r-4.0.3/lib64/R/lib:$LD_LIBRARY_PATH
