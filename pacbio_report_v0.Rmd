@@ -213,6 +213,7 @@ chunk1=text3[1:chunksplit -1 ]
 if(length(chunk1)>5){
 i1 <- grep("Demux Stats:", chunk1)+1
 cellspec=text3[grepl(dropid,text3)==T]
+if(length(cellspec)!=0){
 cnames=read.csv(text=gsub("\\.,", ",", sub("\\s*,$", "", chunk1[i1])), header=T, sep="|", row.names = NULL, check.names=FALSE)
     i2 <-grep("total_demux_bases", cellspec)-1
      if(is.na(chunksplit)==F){
@@ -240,12 +241,11 @@ cnames=read.csv(text=gsub("\\.,", ",", sub("\\s*,$", "", chunk1[i1])), header=T,
     title1 <- textGrob(title_wrapped, gp=gpar(fontsize=12), y=unit(0.6,"npc")+ 0.75*h1, vjust=0)
     gt3 <- gTree(children=gList(t3_f1,title1))
     grid.arrange(gt3, newpage = T)
-}}
+}}}
 i1 <- grep("CCS Demux Stats:", text3)+1
 i2 <-grep("total_demux_ccs_bp",text3)[1]
 cellspec<-text3[i1:i2]
 chunk2<-text3[i1]
-if(length(cellspec)>2){
 t3f2_ll=read.csv(text=gsub("\\.,", ",", sub("\\s*,$", "", cellspec[length(cellspec)])), header=F, sep="|", row.names = NULL,check.names=FALSE)
     lline=data.frame("Totals", "-", "-","-",t3f2_ll[6],t3f2_ll[10], t3f2_ll[4],t3f2_ll[8], "-","-","-","-","-","-","-","-","-")
     #CSS Demux Stats
@@ -255,6 +255,7 @@ t3f2_ll=read.csv(text=gsub("\\.,", ",", sub("\\s*,$", "", cellspec[length(cellsp
     t3_p2$X=NULL
     t3_p2$X.1=NULL
     t3_filt2t=t3_p2[t3_p2$cell==dropid,]
+    if(nrow(t3_filt2t)>0){
     empty_columns <- colSums(is.na(t3_filt2t) | t3_filt2t == "") == nrow(t3_filt2t)
     t3_filt2=t3_filt2t[, !empty_columns]
     cnames=colnames(t3_filt2)
