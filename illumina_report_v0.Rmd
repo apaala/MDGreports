@@ -254,38 +254,75 @@ grid.arrange(gt1)
 
 ```{r Figures1a, echo=FALSE,fig.align='center', out.width='100%', message=FALSE, fig.cap="Flowcell Passed-Filter Cluster Count Distribution by Lane."}
 newplots=paste0(qcplots,"/images/")
-fig1n=unlist(list.files(path=newplots, pattern="all_ClusterCount-by-lane.png", full.names = T))
+if(length(lanes)==1){
+fig1n=unlist(list.files(path=newplots, pattern=paste0(lanes,"_ClusterCount-by-lane.png"), full.names = T))
 fig1 = fig1n[file.size(fig1n) != 0L]
 if(file.exists(fig1)){
 #if(file.size(fig1) != 0L){
 ggdraw() + draw_image(fig1)
-}
+}}
+
+if(length(lanes)>1){
+  fig1n=unlist(list.files(path=newplots, pattern="all_ClusterCount-by-lane.png", full.names = T))
+fig1 = fig1n[file.size(fig1n) != 0L]
+if(file.exists(fig1)){
+#if(file.size(fig1) != 0L){
+ggdraw() + draw_image(fig1)
+}}
 ```
 
 ```{r Figures1b, echo=FALSE,fig.align='center', out.width='100%', message=FALSE, fig.cap="Flowcell Signal Intensity By Lane"}
-fig2n=unlist(list.files(path=newplots, pattern="all_flowcell-Intensity.png", full.names = T))
+if(length(lanes)==1){
+fig2n=unlist(list.files(path=newplots, pattern=paste0(lanes,"_flowcell-Intensity.png"), full.names = T))
 fig2 = fig2n[file.size(fig2n) != 0L]
 if(file.exists(fig2)){
-#if(file.size(fig2n) != 0L){
+#if(file.size(fig1) != 0L){
 ggdraw() + draw_image(fig2)
-}
+}}
+
+if(length(lanes)>1){
+  fig2n=unlist(list.files(path=newplots, pattern="all_flowcell-Intensity.png", full.names = T))
+fig2 = fig1n[file.size(fig2n) != 0L]
+if(file.exists(fig2)){
+#if(file.size(fig1) != 0L){
+ggdraw() + draw_image(fig2)
+}}
 ```
 
 ```{r Figures1c, echo=FALSE,fig.align='center', out.width='100%', message=FALSE, fig.cap="Flowcell Signal Intensity By Cycle"}
-fig3n=unlist(list.files(path=newplots, pattern="all_Intensity-by-cycle_Intensity.png", full.names = T))
+if(length(lanes)==1){
+fig3n=unlist(list.files(path=newplots, pattern=paste0(lanes,"_Intensity-by-cycle_Intensity.png"), full.names = T))
 fig3 = fig3n[file.size(fig3n) != 0L]
 if(file.exists(fig3)){
-#if(file.size(fig3n) != 0L){
+#if(file.size(fig1) != 0L){
 ggdraw() + draw_image(fig3)
-}
+}}
+
+if(length(lanes)>1){
+  fig3n=unlist(list.files(path=newplots, pattern="all_Intensity-by-cycle_Intensity.png", full.names = T))
+fig3 = fig3n[file.size(fig3n) != 0L]
+if(file.exists(fig3)){
+#if(file.size(fig1) != 0L){
+ggdraw() + draw_image(fig3)
+}}
 ```
 
 ```{r Figures1d, echo=FALSE,fig.align='center', out.width='100%', message=FALSE, fig.cap="Flowcell Mean Quality Score Distribution By Cycle"}
-fig4n=unlist(list.files(path=newplots, pattern="all_q-heat-map.png", full.names = T))
+if(length(lanes)==1){
+fig4n=unlist(list.files(path=newplots, pattern=paste0(lanes,"_q-heat-map.png"), full.names = T))
 fig4 = fig4n[file.size(fig4n) != 0L]
 if(file.exists(fig4)){
+#if(file.size(fig1) != 0L){
 ggdraw() + draw_image(fig4)
-}
+}}
+
+if(length(lanes)>1){
+  fig4n=unlist(list.files(path=newplots, pattern="all_q-heat-map.png", full.names = T))
+fig4 = fig4n[file.size(fig4n) != 0L]
+if(file.exists(fig4)){
+#if(file.size(fig1) != 0L){
+ggdraw() + draw_image(fig4)
+}}
 ```
 
 
