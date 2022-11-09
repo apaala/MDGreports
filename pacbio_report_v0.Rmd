@@ -470,6 +470,8 @@ if(dir.exists(dqcp)){
 ldqcp=list.files(path=dqcp,pattern="topHits.txt", full.names=T)
 if(length(ldqcp)!=0){
 for(f in ldqcp){
+  #add condition to check if f is empty
+  if(file.size(f) != 0L){
     text4=readLines(f)
     chunksplit <- which(!nzchar(text4))
     start1=chunksplit[1]+1
@@ -521,7 +523,7 @@ for(f in ldqcp){
       grid.arrange(gt2)
     }
 
-}}}
+}}}}
 
 ```
 
