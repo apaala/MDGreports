@@ -714,25 +714,54 @@ if(nrow(trimf)<=35){
 # Per Sample FastQC Summary Results
 
 ```{r Figures2a1, echo=FALSE,fig.align='center', message=FALSE}
-
-samples=tablef$Sample
+###Add support for unaligned_1/unaligned_2 from mapping file info
+###Nov 15 2022
+pmapf<-mapf[mapf$project==projid,]
+pmapsamples<-pmapf$sample_id
+fig_map<-pmapf
+fig_map$demux_file<-gsub("Reports.*", "", fig_map$demux_file)
+fig_map$fig_path<-paste0(fig_map$demux_file,"QA/Project_", projid, "/Sample_", fig_map$sample_id)
+samples=pmapf$sample_id
 bq=list()
-for(s in samples){
-fqc1=paste0(runpath,"/Unaligned/QA/Project_", projid, "/Sample_",s)
-fqcdir=list.files(path=fqc1, pattern=".png", recursive=T, full.names = T)
-pbqc1=fqcdir[grepl("per_base_quality.png",fqcdir)]
-pdqc=pbqc1[!grepl("_trimmed", pbqc1)]
-bq=append(bq,pdqc)
-images<-image_read(pdqc)
-#if(images[file.size(images) != 0L]){
-first1<-grid::rasterGrob(as.raster(images[1]))
-first2<-grid::rasterGrob(as.raster(images[2]))
-#cap<-paste0("per base quality for ", s)
-cap1<-paste0("Read 1 per base quality for ", s)
-cap2<-paste0("Read 2 per base quality for ", s)
-grid.arrange(first1, top = textGrob(cap1, gp = gpar(fontface = 3L, fontsize = 5)))
-grid.arrange(first2, top = textGrob(cap2, gp = gpar(fontface = 3L, fontsize = 5)))
+
+####
+
+for(p in fig_map$fig_path){
+  fqcdir=list.files(path=p, pattern=".png", recursive=T, full.names = T)
+  pbqc1=fqcdir[grepl("per_base_quality.png",fqcdir)]
+  pdqc=pbqc1[!grepl("_trimmed", pbqc1)]
+  bq=append(bq,pdqc)
+  #print(pdqc)
+  images<-image_read(pdqc)
+  #if(images[file.size(images) != 0L]){
+  first1<-grid::rasterGrob(as.raster(images[1]))
+  first2<-grid::rasterGrob(as.raster(images[2]))
+  #cap<-paste0("per base quality for ", s)
+  ss=fig_map[fig_map$fig_path==p,]
+  s=ss$sample_id
+  cap1<-paste0("Read 1 per base quality for ", s)
+  cap2<-paste0("Read 2 per base quality for ", s)
+  grid.arrange(first1, top = textGrob(cap1, gp = gpar(fontface = 3L, fontsize = 5)))
+  grid.arrange(first2, top = textGrob(cap2, gp = gpar(fontface = 3L, fontsize = 5)))
 }
+
+####previous implementation
+# for(s in samples){
+# fqc1=paste0(runpath,"/Unaligned/QA/Project_", projid, "/Sample_",s)
+# fqcdir=list.files(path=fqc1, pattern=".png", recursive=T, full.names = T)
+# pbqc1=fqcdir[grepl("per_base_quality.png",fqcdir)]
+# pdqc=pbqc1[!grepl("_trimmed", pbqc1)]
+# bq=append(bq,pdqc)
+# images<-image_read(pdqc)
+# #if(images[file.size(images) != 0L]){
+# first1<-grid::rasterGrob(as.raster(images[1]))
+# first2<-grid::rasterGrob(as.raster(images[2]))
+# #cap<-paste0("per base quality for ", s)
+# cap1<-paste0("Read 1 per base quality for ", s)
+# cap2<-paste0("Read 2 per base quality for ", s)
+# grid.arrange(first1, top = textGrob(cap1, gp = gpar(fontface = 3L, fontsize = 5)))
+# grid.arrange(first2, top = textGrob(cap2, gp = gpar(fontface = 3L, fontsize = 5)))
+# }
 #}
 basequal_list=unlist(bq)
 ```
@@ -743,12 +772,23 @@ basequal_list=unlist(bq)
 
 
 ```{r Megablast, echo=FALSE, message=FALSE, warning=FALSE, fig.align="center",fig.width=22, fig.height=18}
-
+###Add support for unaligned_1/unaligned_2 from mapping file info
+###Nov 15 2022
+pmapf<-mapf[mapf$project==projid,]
+pmapsamples<-pmapf$sample_id
 samples=tablef$Sample
-for(s in samples){
-    mgb1=paste0(runpath,"/Unaligned/QC/Project_", projid, "/Sample_",s,"/QC/")
-    mgb=unlist(list.files(path=mgb1,pattern="subset.fasta.blast.topHits.txt", full.names = T))
-    if(file.exists(mgb)){
+pmapf<-mapf[mapf$project==projid,]
+pmapsamples<-pmapf$sample_id
+MB_map<-pmapf
+MB_map$demux_file<-gsub("Reports.*", "", MB_map$demux_file)
+MB_map$mb_path<-paste0(fig_map$demux_file,"QC/Project_", projid, "/Sample_", fig_map$sample_id, "/QC")
+samples=pmapf$sample_id
+
+###
+for(p in MB_map$mb_path){
+    #mgb1=paste0(runpath,"/Unaligned/QC/Project_", projid, "/Sample_",s,"/QC/")
+    mgb=unlist(list.files(path=p,pattern=".fasta.blast.topHits.txt", full.names = T))
+    if(file.exists(mgb) && length(mgb)!=0){
     text4=readLines(mgb)
     chunksplit <- which(!nzchar(text4))
     if(identical(chunksplit, integer(0))==F){
@@ -757,7 +797,8 @@ for(s in samples){
     chunk1=text4[start1:end1]
     t4p1=read.csv(text=gsub("\\.,", ",", sub("\\s*,$", "", chunk1)), header=F, sep="\t", row.names = NULL, check.names=FALSE)
     samplename=basename(mgb)
-    sname=gsub( ".subset.fasta.blast.topHits.txt","", samplename)
+    sname1=gsub( ".fasta.blast.topHits.txt","", samplename)
+    sname=gsub(".subset","",sname1)
     names(t4p1)<-NULL
     ###make table grob
     t4_f1<-tableGrob(t4p1, theme=mytheme,rows=NULL)
@@ -801,5 +842,62 @@ for(s in samples){
              nrow=2)
 }
 }}
+####
+# for(s in samples){
+#     mgb1=paste0(runpath,"/Unaligned/QC/Project_", projid, "/Sample_",s,"/QC/")
+#     mgb=unlist(list.files(path=mgb1,pattern="subset.fasta.blast.topHits.txt", full.names = T))
+#     if(file.exists(mgb)){
+#     text4=readLines(mgb)
+#     chunksplit <- which(!nzchar(text4))
+#     if(identical(chunksplit, integer(0))==F){
+#     start1=chunksplit[1]+1
+#     end1=chunksplit[2]-1
+#     chunk1=text4[start1:end1]
+#     t4p1=read.csv(text=gsub("\\.,", ",", sub("\\s*,$", "", chunk1)), header=F, sep="\t", row.names = NULL, check.names=FALSE)
+#     samplename=basename(mgb)
+#     sname=gsub( ".subset.fasta.blast.topHits.txt","", samplename)
+#     names(t4p1)<-NULL
+#     ###make table grob
+#     t4_f1<-tableGrob(t4p1, theme=mytheme,rows=NULL)
+#     table4title1=strwrap(paste0("Table 6: Summary Results for ",s,". This table lists metrics for the expected genus & species, and the top other genus and species."),width = 175, simplify = F)
+#     title_wrapped<-sapply(table4title1, paste, collapse = "\n")
+#     h1 <- grobHeight(t4_f1)
+#     w1 <- grobWidth(t4_f1)
+#     title1 <- textGrob(title_wrapped, gp=gpar(fontsize=18), y=unit(0.6,"npc")+ 0.75*h1, vjust=0)
+#     gt1 <- gTree(children=gList(t4_f1,title1))
+# 
+#     start2=end1+2
+#     end2=chunksplit[3]-1
+#     chunk2=text4[start2:end2]
+#     t4p2=read.csv(text=gsub("\\.,", ",", sub("\\s*,$", "", chunk2)), header=F, sep="\t", row.names = NULL, check.names=FALSE)
+#     names(t4p2)<-NULL
+#     ###make table grob
+#     t4_f2<-tableGrob(t4p2, theme=mytheme,rows=NULL)
+#     table4title1=strwrap(paste0("Table 6: Summary Results for ",s,". This table lists metrics for the expected genus & species, and the top other genus and species."),width = 175, simplify = F)
+#     title_wrapped<-sapply(table4title1, paste, collapse = "\n")
+#     h1 <- grobHeight(t4_f2)
+#     w1 <- grobWidth(t4_f2)
+#     title1 <- textGrob(title_wrapped, gp=gpar(fontsize=18), y=unit(0.6,"npc")+ 0.75*h1, vjust=0)
+#     gtt1<-arrangeGrob(t4_f1,t4_f2, ncol=2)
+#     gt2 <- gTree(children=gList(gtt1,title1))
+# 
+#     start3=chunksplit[3]+3
+#     chunk3=text4[start3:length(text4)]
+#     t4p3=read.csv(text=gsub("\\.,", ",", sub("\\s*,$", "", chunk3)), header=T, sep="\t", row.names = NULL, check.names=FALSE)
+#     t5<-t4p3[1:25,]
+#     t5p1<-t5[rowSums(is.na(t5)) != ncol(t5),]
+#     ###make table grob
+#     t4_f3<-tableGrob(t5p1, theme=mytheme,rows=NULL)
+#     table4title1=strwrap(paste0("Table 7: Contamination Screen Summary for ",sname,". This table lists the top 25 matches for sample the library sequenced, ranked by the number of reads for each hit."),width = 175, simplify = F)
+#     title_wrapped<-sapply(table4title1, paste, collapse = "\n")
+#     h1 <- grobHeight(t4_f3)
+#     w1 <- grobWidth(t4_f3)
+#     title1 <- textGrob(title_wrapped, gp=gpar(fontsize=18), y=unit(0.6,"npc")+ 0.75*h1, vjust=0)
+#     gt1 <- gTree(children=gList(t4_f3,title1))
+#     grid.arrange(arrangeGrob(gt2), 
+#              arrangeGrob(gt1), 
+#              nrow=2)
+# }
+# }}
 
 ```
