@@ -13,11 +13,12 @@ a.	Rscript markdown directory (.Rmd)
 b.	Run ID
 c.	Cell ID
 d.	Outdir
+e.  Project ID
 3.	Command: 
-sh <path to wrapper.sh> <path to .Rmd> <run ID> <cell ID> <outdir>
+sh <path to wrapper.sh> <path to .Rmd> <run ID> <cell ID> <outdir> <project ID>
 
 ex.
-sh /path/to/pacbio_wrapper.sh /path/to/MDGreports/pacbio_report_v0.Rmd runID cellID /path/to/outdir//
+sh /path/to/pacbio_wrapper.sh /path/to/MDGreports/pacbio_report_v0.Rmd runID cellID /path/to/outdir/ projectID
 
 Using illumina_wrapper.sh
 

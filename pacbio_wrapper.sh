@@ -23,14 +23,16 @@ rscript=$1
 run_id=$2
 cell_id=$3
 outdir=$4
+projid=$5
 
 cmd1="rmarkdown::render('"
 cmd2="',params=list(runid='"
 cmd3="',cellid='"
 cmd4="'),output_dir='"
 cmd5="',output_file=paste('"
-cmd6="','_',Sys.Date(),'_pacbio_Report.pdf',sep=''))"
+cmd6="_"
+cmd7="','_',Sys.Date(),'_pacbio_Report.pdf',sep=''))"
 
-$Rexec --vanilla -e $cmd1$rscript$cmd2$run_id$cmd3$cell_id$cmd4$outdir$cmd5$run_id$cell_id$cmd6
+$Rexec --vanilla -e $cmd1$rscript$cmd2$run_id$cmd3$cell_id$cmd4$outdir$cmd5$run_id$cmd6$cell_id$cmd6$projid$cmd7
 
 echo "Report done"
