@@ -14,11 +14,12 @@ b.	Run ID
 c.	Cell ID
 d.	Outdir
 e.  Project ID
+f.  Path to base directory
 3.	Command: 
-sh <path to wrapper.sh> <path to .Rmd> <run ID> <cell ID> <outdir> <project ID>
+sh <path to wrapper.sh> <path to .Rmd> <run ID> <cell ID> <outdir> <project ID> <path to base dir>
 
 ex.
-sh /path/to/pacbio_wrapper.sh /path/to/MDGreports/pacbio_report_v0.Rmd runID cellID /path/to/outdir/ projectID
+sh /path/to/pacbio_wrapper.sh /path/to/MDGreports/pacbio_report_v0.Rmd runID cellID /path/to/outdir/ projectID /path/to/base/dir/2022
 
 Using illumina_wrapper.sh
 

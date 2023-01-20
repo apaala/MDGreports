@@ -10,6 +10,7 @@ params:
   pathd: "/"
   cellid: "A01_1"
   runid: "20220313_S64049_1"
+  basep: "/local/sequence/pacbio/data/2022/"
 ---
 
 ```{r setup, include=FALSE, echo=FALSE, message=FALSE, warning=FALSE}
@@ -29,8 +30,9 @@ library(jsonlite)
 odirec=unlist(params$pathd)
 runid=unlist(params$runid)
 cellid=unlist(params$cellid)
+basep=unlist(params$basep)
 ###Based on input decipher the path to inputs
-basep="/local/sequence/pacbio/data/2022/"
+#basep="/local/sequence/pacbio/data/2022/"
 basepsun="/PA_Logs/runinfo.csv"
 runpath=paste0(basep,runid,basepsun)
 statspath=paste0(basep,runid,"/PA_Logs/run_stats.csv")
