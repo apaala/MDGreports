@@ -31,9 +31,9 @@ cmd2="',params=list(runid='"
 cmd3="',cellid='"
 cmd4="',basep='"
 cmd5="'),output_dir='"
-cmd6="',output_file=paste('"
+cmd6="',output_file='"
 cmd7="_"
-cmd8="','_',Sys.Date(),'_pacbio_Report.pdf',sep=''))"
+cmd8="_pacbio_Report.pdf')"
 
 $Rexec --vanilla -e $cmd1$rscript$cmd2$run_id$cmd3$cell_id$cmd4$basep$cmd5$outdir$cmd6$run_id$cmd7$cell_id$cmd7$projid$cmd8
 
