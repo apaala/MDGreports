@@ -33,9 +33,16 @@ a.      Rscript markdown directory (.Rmd)
 b.      Run ID
 c.      Project ID
 d.      Outdir
+e.      Path to base directory
 3.      Command:
-sh <path to wrapper.sh> <path to .Rmd> <run ID> <Project ID> <outdir>
+sh <path to wrapper.sh> <path to .Rmd> <run ID> <Project ID> <outdir> <base dir path>
 
 ex.
-sh /path/to/illumina_wrapper.sh /path/to/MDGreports/illumina_report_v0.Rmd runID projectID /path/to/outdir//
+sh /path/to/illumina_wrapper.sh /path/to/MDGreports/illumina_report_v0.Rmd runID projectID /path/to/outdir// /path/to/basedir
+
+
+----------------------------------------------------
+NOTE:
+Date:April,7th,2023
+Details: Please use V2_01 for bug fixes instead of v0.
 
