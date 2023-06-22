@@ -30,11 +30,12 @@ cmd1="rmarkdown::render('"
 cmd2="',params=list(runid='"
 cmd3="',cellid='"
 cmd4="',basep='"
-cmd5="'),output_dir='"
-cmd6="',output_file='"
-cmd7="_"
-cmd8="_PacBio_Report.pdf')"
+cmd5="',pathd='"
+cmd6="'),output_dir='"
+cmd7="',output_file='"
+cmd8="_"
+cmd9="_PacBio_Report.pdf')"
 
-$Rexec --vanilla -e $cmd1$rscript$cmd2$run_id$cmd3$cell_id$cmd4$basep$cmd5$outdir$cmd6$run_id$cmd7$cell_id$cmd7$projid$cmd8
+$Rexec --vanilla -e $cmd1$rscript$cmd2$run_id$cmd3$cell_id$cmd4$basep$cmd5$outdir$cmd6$outdir$cmd7$run_id$cmd8$cell_id$cmd8$projid$cmd9
 
 echo "Report done"
