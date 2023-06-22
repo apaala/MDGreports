@@ -305,19 +305,6 @@ cnames=read.csv(text=gsub("\\.,", ",", sub("\\s*,$", "", chunk1[i1])), header=T,
     cnames=colnames(t3_filt1)
     colnames(lline)=cnames
     t3_filt1ll=rbind(t3_filt1,lline)
-     ####change to gt
-    #gt(t3_filt1ll)|>tab_options(column_labels.background.color = "teal")%>%tab_style(style=cell_borders(sides = c("top","bottom")), locations = cells_body(columns = everything(),rows = everything()))
- ################
-    #make table grob
-    t3_f1<-tableGrob(t3_filt1ll, theme=mytheme,rows=NULL)
-    table3title1=strwrap("Table 3A: SubRead Demultiplexing Stats. This table lists subread metrics for all samples demultiplexed as part of the run.",width = 175, simplify = F)
-    title_wrapped<-sapply(table3title1, paste, collapse = "\n")
-    h1 <- grobHeight(t3_f1)
-    w1 <- grobWidth(t3_f1)
-    title1 <- textGrob(title_wrapped, gp=gpar(fontsize=12), y=unit(0.6,"npc")+ 0.75*h1, vjust=0)
-    gt3 <- gTree(children=gList(t3_f1,title1))
-    #grid.arrange(gt3, newpage = T)
-    #Flextable
     gt3=autofit(flextable(t3_filt1ll)%>%set_caption(caption = "Table 3A: SubRead Demultiplexing Stats. This table lists subread metrics for all samples demultiplexed as part of the run.")%>% theme_zebra()%>%bg(bg = "#44B29C", part = "header"))%>%fit_to_width(max_width = 8.5)
     flextable_to_rmd(gt3)
     write.csv(t3_filt1ll, file=paste0(csvout, "/table3a.csv"))
@@ -334,7 +321,7 @@ t3f2_ll=read.csv(text=gsub("\\.,", ",", sub("\\s*,$", "", cellspec[length(cellsp
     cnames2=read.csv(text=gsub("\\.,", ",", sub("\\s*,$", "", chunk2)), header=T, sep="|", row.names = NULL,check.names=FALSE)
     #cellspec2=cellspec[1:length(cellspec)-1]
     cellspec2=cellspec[grep(dropid, cellspec)]
-    t3_p2=read.csv(text=gsub("\\.,", ",", sub("\\s*,$", "", cellspec2)), header=F, sep="|", row.names = NULL, col.names = colnames(cnames2), check.names=FALSE)
+    t3_p2=read.csv(text=gsub("\\.,", ",", sub("\\s*,$", "", cellspec2[1:length(cellspec2)-1])), header=F, sep="|", row.names = NULL, col.names = colnames(cnames2), check.names=FALSE)
     t3_p2$X=NULL
     t3_p2$X.1=NULL
     t3_filt2t=t3_p2[t3_p2$cell==dropid,]
@@ -346,12 +333,6 @@ t3f2_ll=read.csv(text=gsub("\\.,", ",", sub("\\s*,$", "", cellspec[length(cellsp
     #Remove NA colnames
     lline<-lline[!is.na(names(lline))]
     t3_filt2ll=rbind(t3_filt2,lline)
-    ####change to gt
-    #gt(t3_filt2ll)|>tab_options(column_labels.background.color = "teal")%>%tab_style(style=cell_borders(sides = c("top","bottom")), locations = cells_body(columns = everything(),rows = everything()))
- ################
-    #t3_f2<-tableGrob(t3_filt2ll, theme=mytheme,rows=NULL)
-    table3title2=strwrap("Table 3B: HiFi (CCS) Demultiplexing Stats. This table lists HiFi (CCS) metrics for all samples demultiplexed as part of the run.",width = 175, simplify = F)
-    #grid.arrange(gt3, newpage = T)
     #flextable
     gt3=autofit(flextable(t3_filt2ll)%>%set_caption(caption = "Table 3B: HiFi (CCS) Demultiplexing Stats. This table lists HiFi (CCS) metrics for all samples demultiplexed as part of the run.")%>% theme_zebra()%>%bg(bg = "#44B29C", part = "header"))%>%fit_to_width(max_width = 8.5)
     flextable_to_rmd(gt3)
