@@ -409,8 +409,11 @@ trimf=trimstats[trimstats$Project==projid,]
 trimf$Lane<-gsub("L00","",trimf$Lane)
 trimtable<-trimf[,colSums(is.na(trimf))<nrow(trimf)]
 ####flextable
+if(ncol(trimtable)==15){
 ft_runinfo=autofit(flextable(trimtable)%>%set_caption(caption = "Table 5: Adaptor and Quality Trimming Summary")%>% theme_zebra()%>%bg(bg = "#44B29C", part = "header"))%>%add_header_row( values = c("","Read 1 Untrimmed","","Read 2 Untrimmed",""),colwidths = c(3,3,3,3,3), top = TRUE)%>%align( align = "center", part = "all")%>%bg(bg="#edd77e", j=c(4,5,6,10,11,12))%>%fit_to_width(max_width = 8.25)
-
+} else {
+  ft_runinfo=autofit(flextable(trimtable)%>%set_caption(caption = "Table 5: Adaptor and Quality Trimming Summary")%>% theme_zebra()%>%bg(bg = "#44B29C", part = "header"))%>%align( align = "center", part = "all")%>%fit_to_width(max_width = 8.25)
+}
 flextable_to_rmd(ft_runinfo)
 write.csv(trimtable, file=paste0(csvout, "/table5.csv"))
 ```
