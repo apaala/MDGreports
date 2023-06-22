@@ -10,7 +10,7 @@ geometry: margin=0.5cm
 params:
   projectname: "Project"
   thedate: !r Sys.Date()
-  pathd: "/local/scratch/achatterjee/"
+  pathd: ""
   projid: "A01_1"
   runid: "20220313_S64049_1"
   basep: "/local/sequence/illumina"  
@@ -73,7 +73,7 @@ if (!dir.exists(csvout)){
 ```
 
 ```{r logo, echo=FALSE, message=FALSE, warning=FALSE, fig.align="center"}
-#knitr::include_graphics("/local/projects-t3/achatterjee/MDG/md-genomics-horizontal.pdf")
+knitr::include_graphics("/local/projects-t3/achatterjee/MDG/md-genomics-horizontal.pdf")
 #knitr::include_graphics("/Users/apaala.chatterjee/MDG/md-genomics-horizontal.jpeg")
 #classoption: landscape
 
