@@ -489,7 +489,9 @@ for(p in map_nodupes$mb_path){
     sname=gsub(".subset","",sname1)
     names(t4p1)<-NULL
     ###make table grob
+    
     t4_f1<-tableGrob(t4p1, theme=mytheme,rows=NULL)
+    table4title1=strwrap(paste0("Table 6: Summary Results for ",s,". This table lists metrics for the expected genus & species, and the top other genus and species."),width = 175, simplify = F)
     title_wrapped<-sapply(table4title1, paste, collapse = "\n")
     h1 <- grobHeight(t4_f1)
     w1 <- grobWidth(t4_f1)
