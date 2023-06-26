@@ -511,8 +511,11 @@ MB_map$demux_file<-gsub("Reports.*", "", MB_map$demux_file)
 MB_map$mb_path<-paste0(MB_map$demux_file,"QC/Project_", projid, "/Sample_", MB_map$sample_id, "/QC")
 samples=pmapf$sample_id
 
+##Deal with multiple lanes for one sample
+map_nodupes<-MB_map[!duplicated(MB_map$sample_id),]
+
 ###
-for(p in MB_map$mb_path){
+for(p in map_nodupes$mb_path){
     #mgb1=paste0(runpath,"/Unaligned/QC/Project_", projid, "/Sample_",s,"/QC/")
     mgb=unlist(list.files(path=p,pattern=".fasta.blast.topHits.txt", full.names = T))
     if(length(mgb)>1){
