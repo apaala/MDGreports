@@ -480,7 +480,7 @@ pmapsamples<-pmapf$sample_id
 #pmapsamples<-pmapf$sample_id
 MB_map<-pmapf
 MB_map$demux_file<-gsub("Reports.*", "", MB_map$demux_file)
-MB_map$mb_path<-paste0(fig_map$demux_file,"QC/Project_", projid, "/Sample_", fig_map$sample_id, "/QC")
+MB_map$mb_path<-paste0(MB_map$demux_file,"QC/Project_", projid, "/Sample_", MB_map$sample_id, "/QC")
 samples=pmapf$sample_id
 flag=FALSE
 
@@ -508,13 +508,16 @@ pmapsamples<-pmapf$sample_id
 #pmapsamples<-pmapf$sample_id
 MB_map<-pmapf
 MB_map$demux_file<-gsub("Reports.*", "", MB_map$demux_file)
-MB_map$mb_path<-paste0(fig_map$demux_file,"QC/Project_", projid, "/Sample_", fig_map$sample_id, "/QC")
+MB_map$mb_path<-paste0(MB_map$demux_file,"QC/Project_", projid, "/Sample_", MB_map$sample_id, "/QC")
 samples=pmapf$sample_id
 
 ###
 for(p in MB_map$mb_path){
     #mgb1=paste0(runpath,"/Unaligned/QC/Project_", projid, "/Sample_",s,"/QC/")
     mgb=unlist(list.files(path=p,pattern=".fasta.blast.topHits.txt", full.names = T))
+    if(length(mgb)>1){
+      mgb=mgb[1]
+    }
     if(file.exists(mgb) && length(mgb)!=0){
     text4=readLines(mgb)
     chunksplit <- which(!nzchar(text4))
