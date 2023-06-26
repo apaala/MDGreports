@@ -430,6 +430,9 @@ Str2="For each library, a randomly selected subset of reads are screened for con
 ##edit below for conditional printing borrowed from pacBio
 pmapf<-mapf[mapf$project==projid,]
 pmapsamples<-pmapf$sample_id
+#samples=tablef$Sample
+#pmapf<-mapf[mapf$project==projid,]
+#pmapsamples<-pmapf$sample_id
 MB_map<-pmapf
 MB_map$demux_file<-gsub("Reports.*", "", MB_map$demux_file)
 MB_map$mb_path<-paste0(MB_map$demux_file,"QC/Project_", projid, "/Sample_", MB_map$sample_id, "/QC")
@@ -487,6 +490,7 @@ for(p in map_nodupes$mb_path){
     names(t4p1)<-NULL
     ###make table grob
     t4_f1<-tableGrob(t4p1, theme=mytheme,rows=NULL)
+    title_wrapped<-sapply(table4title1, paste, collapse = "\n")
     h1 <- grobHeight(t4_f1)
     w1 <- grobWidth(t4_f1)
     title1 <- textGrob(title_wrapped, gp=gpar(fontsize=18), y=unit(0.6,"npc")+ 0.75*h1, vjust=0)
