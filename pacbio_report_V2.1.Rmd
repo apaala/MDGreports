@@ -23,7 +23,7 @@ header-includes:
    -  \usepackage{xcolor} 
    -  \fancyfoot[CO,CE]{PacBio Report V2.1}
 ---
-
+suppressWarnings({
 ```{r setup, include=FALSE, echo=FALSE, message=FALSE, warning=FALSE}
 knitr::opts_chunk$set(echo = FALSE, warning = FALSE)
 knitr::opts_chunk$set(fig.pos = 'H')
@@ -593,4 +593,4 @@ for(f in ldqcp){
 }}}}
 
 ```
-
+})
