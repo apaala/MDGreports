@@ -21,7 +21,7 @@ header-includes:
    -  \usepackage{color} 
    -  \usepackage{caption}
    -  \usepackage{xcolor} 
-   -  \fancyfoot[CO,CE]{PacBio Report V2.1}
+   -  \fancyfoot[CO,CE]{PacBio Report V2}
 ---
 
 ```{r setup, include=FALSE, echo=FALSE, message=FALSE, warning=FALSE}
@@ -475,7 +475,7 @@ for(f in ldqcp){
     ###make table grob
     names(t4p1)<-NULL
     t4_f1<-tableGrob(t4p1, theme=mytheme,rows=NULL)
-    table4title1=strwrap(paste0("Table 5: Summary Results for ",sname,". This table lists metrics for the expected genus & species, and the top other genus and species."),width = 175, simplify = F)
+    table4title1=strwrap(paste0("Table 5: Summary Results for ",sname,". This table lists metrics for the expected genus & species, and the top other genus and species."),width = 150, simplify = F)
     title_wrapped<-sapply(table4title1, paste, collapse = "\n")
     h1 <- grobHeight(t4_f1)
     w1 <- grobWidth(t4_f1)
@@ -493,7 +493,7 @@ for(f in ldqcp){
     names(t4p2)<-NULL
     ###make table grob
     t4_f2<-tableGrob(t4p2, theme=mytheme,rows=NULL)
-    table4title1=strwrap(paste0("Table 5: Summary Results for ",sname,". This table lists metrics for the expected genus ",genus," & species ",species,", and the top other genus and species."),width = 165, simplify = F)
+    table4title1=strwrap(paste0("Table 5: Summary Results for ",sname,". This table lists metrics for the expected genus ",genus," & species ",species,", and the top other genus and species."),width = 150, simplify = F)
     title_wrapped<-sapply(table4title1, paste, collapse = "\n")
     h1 <- grobHeight(t4_f2)
     w1 <- grobWidth(t4_f2)
@@ -556,7 +556,7 @@ for(f in ldqcp){
     ###make table grob
     names(t4p1)<-NULL
     t4_f1<-tableGrob(t4p1, theme=mytheme,rows=NULL)
-    table4title1=strwrap(paste0("Table 5: Summary Results for ",sname,". This table lists metrics for the expected genus ",genus," & species ",species,", and the top other genus and species."),width = 175, simplify = F)
+    table4title1=strwrap(paste0("Table 5: Summary Results for ",sname,". This table lists metrics for the expected genus ",genus," & species ",species,", and the top other genus and species."),width = 150, simplify = F)
     title_wrapped<-sapply(table4title1, paste, collapse = "\n")
     h1 <- grobHeight(t4_f1)
     w1 <- grobWidth(t4_f1)
@@ -570,7 +570,7 @@ for(f in ldqcp){
     names(t4p2)<-NULL
     ###make table grob
     t4_f2<-tableGrob(t4p2, theme=mytheme,rows=NULL)
-    table4title1=strwrap(paste0("Table 5: Summary Results for ",sname,". This table lists metrics for the expected genus ",genus," & species ",species,", and the top other genus and species."),width = 165, simplify = F)
+    table4title1=strwrap(paste0("Table 5: Summary Results for ",sname,". This table lists metrics for the expected genus ",genus," & species ",species,", and the top other genus and species."),width = 150, simplify = F)
     title_wrapped<-sapply(table4title1, paste, collapse = "\n")
     h1 <- grobHeight(t4_f2)
     w1 <- grobWidth(t4_f2)

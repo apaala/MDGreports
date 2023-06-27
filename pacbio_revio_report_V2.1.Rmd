@@ -123,9 +123,11 @@ write.csv(cellruninfo, file=paste0(csvout, "/table1.csv"))
 
 ```{r Table2, echo=FALSE,fig.width=10, warning=FALSE, fig.height=12, message=FALSE, fig.align='center', warning=FALSE, fig.pos='H', results='asis'}
 #Determine number of tables from file
+suppressWarnings({
 rm(gt1)
 rm(gt2)
 rm(gt3)
+})
 l=readLines(statspath)
 dropid=gsub("\\_.*","",cellid)
 a=grep("PF Polymerase Read Stats:", l)
