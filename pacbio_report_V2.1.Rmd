@@ -15,6 +15,8 @@ params:
   basep: "/local/sequence/pacbio/data/2022/"
 
 header-includes:
+   -  \usepackage{fancyhdr}
+   -  \pagestyle{fancy}
    -  \usepackage{colortbl} 
    -  \usepackage{color} 
    -  \usepackage{caption}
@@ -27,6 +29,7 @@ knitr::opts_chunk$set(echo = FALSE, warning = FALSE)
 knitr::opts_chunk$set(fig.pos = 'H')
 knitr::opts_chunk$set(tab.cap.pre = "", tab.cap.sep = "")
 knitr::opts_chunk$set(echo = FALSE, ft.keepnext = F)
+knitr::opts_chunk$set(warning = FALSE, message=FALSE)
 ```
 \captionsetup[table]{labelformat=empty}
 ```{r setuppaths, echo=FALSE, warning=FALSE, message=FALSE}
