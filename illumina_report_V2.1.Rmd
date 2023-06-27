@@ -396,7 +396,7 @@ if(length(pdqc)>1){
 }
 
 if(flag==TRUE){
-  str1="Per Sample FastQC Summary Results"
+  str1="FastQC Summary Results"
   cat(paste0("# ",str1,"\n"))
 
 ####
