@@ -375,6 +375,34 @@ flextable_to_rmd(ft_runinfo)
 write.csv(trimtable, file=paste0(csvout, "/table5.csv"))
 ```
 
+
+```{r Figures2a1, echo=FALSE,fig.align='center', message=FALSE, results='asis'}
+###Add support for unaligned_1/unaligned_2 from mapping file info
+###Nov 15 2022
+flag=FALSE
+pmapf<-mapf[mapf$project==projid,]
+pmapsamples<-pmapf$sample_id
+fig_map<-pmapf
+fig_map$demux_file<-gsub("Reports.*", "", fig_map$demux_file)
+fig_map$fig_path<-paste0(fig_map$demux_file,"QA/Project_", projid, "/Sample_", fig_map$sample_id)
+samples=pmapf$sample_id
+bq=list()
+testimg=fig_map$fig_path[1]
+fqcdir=list.files(path=testimg, pattern=".png", recursive=T, full.names = T)
+pbqc1=fqcdir[grepl("per_base_quality.png",fqcdir)]
+pdqc=pbqc1[!grepl("_trimmed", pbqc1)]
+if(length(pdqc)>1){
+  flag=TRUE
+}
+
+if(flag==TRUE){
+  str1="Per Sample FastQC Summary Results"
+  cat(paste0("# ",str1,"\n"))
+
+####
+}
+```
+
 ```{r Figures2a, echo=FALSE,fig.align='center', out.width='100%', message=FALSE, fig.cap="Per base Sequence Quality Plot"}
 
 mqc_path=paste0(qcplots,"multiqc/multiqc_",projid,"_plots/png/")
@@ -403,7 +431,6 @@ ggdraw() + draw_image(fig3)
 }
 
 ```
-
 
 ```{r rawqc, echo=FALSE, message=FALSE, warning=FALSE, fig.align="center", results='asis'}
 #runinfo sometimes has 2 lines before relevant text. Normally just one, old runs might have 2.
