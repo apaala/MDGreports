@@ -122,7 +122,7 @@ write.csv(cellruninfo, file=paste0(csvout, "/table1.csv"))
 }
 ```
 
-```{r Table2, echo=FALSE,fig.width=10, fig.height=12, message=FALSE, fig.align='center', warning=FALSE, fig.pos='H', results='asis'}
+```{r Table2, echo=FALSE,fig.width=10, fig.height=12, message=FALSE, fig.align='center',include=FALSE, warning=FALSE, fig.pos='H', results='asis'}
 #Determine number of tables from file
 rm(gt1)
 rm(gt2)
