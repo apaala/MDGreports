@@ -19,6 +19,7 @@ header-includes:
    -  \usepackage{color} 
    -  \usepackage{caption}
    -  \usepackage{xcolor} 
+   -  \fancyfoot[CO,CE]{PacBio Report V2.1}
 ---
 
 ```{r setup, include=FALSE, echo=FALSE, message=FALSE, warning=FALSE}
