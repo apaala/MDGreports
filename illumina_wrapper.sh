@@ -31,9 +31,10 @@ cmd3="',projid='"
 cmd4="',basep='"
 cmd5="',pathd='"
 cmd6="'),output_dir='"
-cmd7="',output_file=paste('"
-cmd8="','_',Sys.Date(),'_illumina_Report.pdf',sep=''))"
+cmd7="',output_file=paste0('"
+cmd8="_"
+cmd9="_Illumina_Report.pdf'))"
 
-$Rexec --vanilla -e $cmd1$rscript$cmd2$run_id$cmd3$proj_id$cmd4$basep$cmd5$outdir$cmd6$outdir$cmd7$run_id$cell_id$cmd8
+$Rexec --vanilla -e $cmd1$rscript$cmd2$run_id$cmd3$proj_id$cmd4$basep$cmd5$outdir$cmd6$outdir$cmd7$run_id$cmd8$proj_id$cmd9
 
 echo "Report done"
