@@ -112,7 +112,8 @@ flextable_to_rmd(ft_runinfo)
   cellruninfo$insertsize<-prettyNum(cellruninfo$insertsize,big.mark=",",scientific=FALSE)
   cellruninfo$targeted_frg_size<-prettyNum(cellruninfo$targeted_frg_size,big.mark=",",scientific=FALSE)
 
-ft_runinfo=autofit(flextable(cellruninfo)%>%set_caption(caption = "Table 1: Sample information. This table lists all samples sequenced on the SMRT Cell.")%>% theme_zebra()%>%bg(bg = "#44B29C", part = "header")%>%fontsize(size = 12))%>%fit_to_width(max_width = 7.5)
+colnames(cellruninfo) <- gsub(x = colnames(cellruninfo), pattern = "_", replacement = " ")
+ft_runinfo=autofit(flextable(cellruninfo)%>%set_caption(caption = "Table 1: Sample information. This table lists all samples sequenced on the SMRT Cell.")%>% theme_zebra()%>%bg(bg = "#44B29C", part = "header"))%>% align(align="center", part="all")%>%fit_to_width(max_width = 7.5)%>% fontsize(size=7, part="all") 
 #grid.arrange(gt1)
 #runinf
 flextable_to_rmd(ft_runinfo)
@@ -273,7 +274,7 @@ cnames=read.csv(text=gsub("\\.,", ",", sub("\\s*,$", "", chunk1[i1])), header=T,
     cnames=colnames(t3_filt1)
     colnames(lline)=cnames
     t3_filt1ll=rbind(t3_filt1,lline)
-    gt3=autofit(flextable(t3_filt1ll)%>%set_caption(caption = "Table 3A: SubRead Demultiplexing Stats. This table lists subread metrics for all samples demultiplexed as part of the run.")%>% theme_zebra()%>%bg(bg = "#44B29C", part = "header"))%>%fit_to_width(max_width = 8.5)
+    gt3=autofit(flextable(t3_filt1ll)%>%set_caption(caption = "Table 3A: SubRead Demultiplexing Stats. This table lists subread metrics for all samples demultiplexed as part of the run.")%>% theme_zebra()%>%bg(bg = "#44B29C", part = "header"))%>% align(align="center", part="all")%>%fit_to_width(max_width = 8.5)
     flextable_to_rmd(gt3)
     write.csv(t3_filt1ll, file=paste0(csvout, "/table3a.csv"))
 }}}
@@ -302,7 +303,7 @@ t3f2_ll=read.csv(text=gsub("\\.,", ",", sub("\\s*,$", "", cellspec[length(cellsp
     lline<-lline[!is.na(names(lline))]
     t3_filt2ll=rbind(t3_filt2,lline)
     #flextable
-    gt3=autofit(flextable(t3_filt2ll)%>%set_caption(caption = "Table 3B: HiFi (CCS) Demultiplexing Stats. This table lists HiFi (CCS) metrics for all samples demultiplexed as part of the run.")%>% theme_zebra()%>%bg(bg = "#44B29C", part = "header"))%>%fit_to_width(max_width = 8.5)
+    gt3=autofit(flextable(t3_filt2ll)%>%set_caption(caption = "Table 3B: HiFi (CCS) Demultiplexing Stats. This table lists HiFi (CCS) metrics for all samples demultiplexed as part of the run.")%>% theme_zebra()%>%bg(bg = "#44B29C", part = "header")) %>% align(align="center", part="all") %>% fit_to_width(max_width = 8.5)
     flextable_to_rmd(gt3)
     write.csv(t3_filt2ll, file=paste0(csvout, "/table3b.csv"))
 }}}
@@ -317,7 +318,7 @@ if(exists('t3_filt1')){
 t3_filt1$bases= as.numeric(gsub(",", "", t3_filt1$bases))
 t3_filt1$reads= as.numeric(gsub(",", "", t3_filt1$reads))
 tab3f1=ggplot(data=t3_filt1, aes(x=`bases`, y=sample)) +geom_bar(stat="identity", color="#44B29C", fill="#44B29C")+ coord_flip()+ylab("Samples")+ xlab("bases")+ theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1))+ scale_x_continuous(labels = comma)
-tab3f2=ggplot(data=t3_filt1, aes(x=`reads`, y=sample)) +geom_bar(stat="identity", color="#334E5C", fill="#334E5C")+ coord_flip()+ylab("Samples")+ xlab("reads")+ theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1))+ scale_x_continuous(labels = comma)
+tab3f2=ggplot(data=t3_filt1, aes(x=`reads`, y=sample)) +geom_bar(stat="identity", color="#44B29C", fill="#44B29C")+ coord_flip()+ylab("Samples")+ xlab("reads")+ theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1))+ scale_x_continuous(labels = comma)
 grid.arrange(tab3f1,tab3f2)
 }}
 ```
@@ -329,9 +330,9 @@ if(file.exists(demuxpath)){
     t3_filt2$bases= as.numeric(gsub(",", "", t3_filt2$bases))
 t3_filt2$reads= as.numeric(gsub(",", "", t3_filt2$reads))
 
-    tab3f3=ggplot(data=t3_filt2, aes(x=`reads`, y=sample)) +geom_bar(stat="identity",color="#FFCD00", fill="#FFCD00")+ coord_flip()+ylab("Samples")+ xlab("reads")+ theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1))+ scale_x_continuous(labels = comma)
+    tab3f3=ggplot(data=t3_filt2, aes(x=`reads`, y=sample)) +geom_bar(stat="identity",color="#44B29C", fill="#44B29C")+ coord_flip()+ylab("Samples")+ xlab("reads")+ theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1))+ scale_x_continuous(labels = comma)
 
-tab3f4=ggplot(data=t3_filt2, aes(x=`bases`, y=sample)) +geom_bar(stat="identity",color="#C8102E", fill="#C8102E")+ coord_flip()+ylab("Samples")+ xlab("bases")+ theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1))+ scale_x_continuous(labels = comma)
+tab3f4=ggplot(data=t3_filt2, aes(x=`bases`, y=sample)) +geom_bar(stat="identity",color="#44B29C", fill="#44B29C")+ coord_flip()+ylab("Samples")+ xlab("bases")+ theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1))+ scale_x_continuous(labels = comma)
 
 grid.arrange(tab3f4,tab3f3)
 
@@ -418,7 +419,7 @@ gg
 
 Str1="Raw Data QC - Contamination Screen Results"
 
-Str2="For each library, a randomly selected subset of reads are screened for contamination by MegaBLAST against a local copy of the NCBI nucleotide (nt) database. The purpose of this screen is only to identify potential contamination in the sample, not to fully characterize the resulting data set."
+Str2="For each library, a randomly selected subset of reads is screened for contamination by MegaBLAST against a local copy of the NCBI nucleotide (nt) database. The purpose of this screen is only to identify potential contamination in the sample, not to fully characterize the resulting data set."
 postpend="/Demux/QC/"
 dqcp=paste0(cellp,postpend)
 Flag=FALSE
@@ -463,7 +464,7 @@ for(f in ldqcp){
   }}
 ```
 
-```{r Table5, echo=F,fig.width=12, fig.height=12, message=F, fig.align='center', results='hide', fig.pos='H', warning=FALSE, warning=FALSE}
+```{r Table5, echo=F,fig.width=12, fig.height=12, message=F, fig.align='center', fig.pos='H', warning=FALSE, warning=FALSE, results='asis',out.height='100%', out.width='100%', fig.width=22, fig.height=22}
 ##Check for demux QC
 postpend="/Demux/QC/"
 dqcp=paste0(cellp,postpend)
@@ -485,13 +486,6 @@ for(f in ldqcp){
     sname=gsub( ".medianSubset.fasta.blast.topHits.txt","", samplename)
     ###make table grob
     names(t4p1)<-NULL
-    t4_f1<-tableGrob(t4p1, theme=mytheme,rows=NULL)
-    table4title1=strwrap(paste0("Table 5: Summary Results for ",sname,". This table lists metrics for the expected genus & species, and the top other genus and species."),width = 175, simplify = F)
-    title_wrapped<-sapply(table4title1, paste, collapse = "\n")
-    h1 <- grobHeight(t4_f1)
-    w1 <- grobWidth(t4_f1)
-    title1 <- textGrob(title_wrapped, gp=gpar(fontsize=12), y=unit(0.6,"npc")+ 0.75*h1, vjust=0)
-    gt1 <- gTree(children=gList(t4_f1,title1))
     write.csv(t4p1, file=paste0(csvout, "/table5a.csv"))
     ###flextable implementation
     #colnames(t4p1)<-c("Parameter","Value")
@@ -502,45 +496,39 @@ for(f in ldqcp){
     chunk2=text4[start2:end2]
     t4p2=read.csv(text=gsub("\\.,", ",", sub("\\s*,$", "", chunk2)), header=F, sep="\t", row.names = NULL, check.names=FALSE)
     names(t4p2)<-NULL
-    ###make table grob
-    t4_f2<-tableGrob(t4p2, theme=mytheme,rows=NULL)
-    table4title1=strwrap(paste0("Table 5: Summary Results for ",sname,". This table lists metrics for the expected genus ",genus," & species ",species,", and the top other genus and species."),width = 165, simplify = F)
-    title_wrapped<-sapply(table4title1, paste, collapse = "\n")
-    h1 <- grobHeight(t4_f2)
-    w1 <- grobWidth(t4_f2)
-    title1 <- textGrob(title_wrapped, gp=gpar(fontsize=12), y=unit(0.6,"npc")+ 0.75*h1, vjust=0)
-    gtt1<-arrangeGrob(t4_f1,t4_f2, ncol=2)
-    gt2 <- gTree(children=gList(gtt1,title1))
     write.csv(t4p2, file=paste0(csvout, "/table5a.csv"))
-    ###flextable implementation
-    #colnames(t4p2)<-c("Parameter","Value")
-    #gt2=autofit(flextable(t4p2)%>%theme_zebra()%>%bg(bg = "#44B29C", part = "header"))%>% as_raster()
-    #flextable_to_rmd(gt1)
-    ###Arrange flextable
-    #gg1=ggplot() + theme_void() + annotation_custom(rasterGrob(gt1), xmin=-Inf, xmax=Inf, ymin=-Inf, ymax=Inf)
-    #gg2=ggplot() + theme_void() + annotation_custom(rasterGrob(gt2), xmin=-Inf, xmax=Inf, ymin=-Inf, ymax=Inf)
-    #cowplot::plot_grid(gg1, gg2, nrow = 1, ncol = 2, rel_heights = c(3, 1) )
+    
     start3=chunksplit[3]+3
     chunk3=text4[start3:length(text4)]
     t4p3=read.csv(text=gsub("\\.,", ",", sub("\\s*,$", "", chunk3)), header=T, sep="\t", row.names = NULL, check.names=FALSE)
-    if(nrow(t4p3)>1){
-    # ###make table grob
-    # t4_f3<-tableGrob(t4p3[1:25,], theme=mytheme,rows=NULL)
-    # table4title1=strwrap(paste0("Table 6: Contamination Screen Summary for ",sname,". This table lists the top 25 matches for sample the library sequenced, ranked by the number of reads for each hit."),width = 175, simplify = F)
-    # title_wrapped<-sapply(table4title1, paste, collapse = "\n")
-    # h1 <- grobHeight(t4_f3)
-    # w1 <- grobWidth(t4_f3)
-    # title1 <- textGrob(title_wrapped, gp=gpar(fontsize=12), y=unit(0.6,"npc")+ 0.75*h1, vjust=0)
-    # gt1 <- gTree(children=gList(t4_f3,title1))
-    ###flextable
-    gt1=autofit(flextable(t4p3[1:25,])%>%set_caption(caption = paste0("Table 6: Contamination Screen Summary for ",sname,". This table lists the top 25 matches for sample the library sequenced, ranked by the number of reads for each hit."))%>%theme_zebra()%>%bg(bg = "#44B29C", part = "header"))%>% as_raster()
-    #flextable_to_rmd(gt1)
-    gg1=ggplot() + theme_void() + annotation_custom(rasterGrob(gt1), xmin=-Inf, xmax=Inf, ymin=-Inf, ymax=Inf)
-    grid.arrange(arrangeGrob(gt2), 
-             arrangeGrob(gg1), 
-             nrow=2)
-    write.csv(t4p3, file=paste0(csvout, "/table6.csv"))
+    ### combine 5A and 5B [confirmed with Kevin R that this is ok to do, no scenario where one is present and other isnt]
+    tp5<-cbind(t4p1,"",t4p2)
+    names(tp5)<-NULL
     
+    ##Titles test
+    table6title=strwrap(paste0("Table 5: Summary Results for ",sname,". This table lists metrics for the expected genus ",genus," & species ",species,", and the top other genus and species."),width = 175, simplify = F)
+    title6_wrapped<-sapply(table6title, paste, collapse = "\n")
+    
+    table7title7=strwrap(paste0("Table 6: Contamination Screen Summary for ",sname,". This table lists the top 25 matches for the library sequenced, ranked by the number of reads for each hit."),width = 150, simplify = F)
+    title7_wrapped<-sapply(table7title7, paste, collapse = "\n")
+    
+    ###Make Table 6
+    margin = theme(plot.margin = unit(c(1,0.5,2,0.5), "cm"))
+    
+    gft6<-autofit(flextable(tp5, col_keys = c("1","2","0","3","4"))%>%theme_zebra()%>%bg(bg = "#44B29C", j=c(1,4),part = "all") %>% width(j="3",width = 0.5) %>% bg( j = 3, bg="white", part = "all", source = j)%>%width(j=3,width=2, unit = "in")%>% align(align="center", part="all") %>% bg(bg="white", part = "header", source = i) %>% bold(j=c(1,4))%>% width(width=1, unit="in"))%>%fit_to_width(max_width = 8.5)%>% as_raster()
+    
+    #tft1<-ggplot()+ theme_void() + annotation_custom(rasterGrob(gft6), xmin=-Inf, xmax=Inf, ymin=-Inf, ymax=Inf) + labs(title = paste0("Table 6: Summary Results for ",sname,". This table lists metrics for the expected genus ",genus," & species ", species,"."), size=14)+ theme(plot.title = element_text(hjust = 0.5, margin=margin(0,0,30,0),size = 18))+ margin
+    
+    tft1<-ggplot()+ theme_void() + annotation_custom(rasterGrob(gft6), xmin=-Inf, xmax=Inf, ymin=-Inf, ymax=Inf) + labs(title = title6_wrapped)+ theme(plot.title = element_text(hjust = 0.5, margin=margin(0,0,30,0),size = 20))+ margin
+    
+    if(nrow(t4p3)>1){
+     gft7<-autofit(flextable(t4p3[1:25,])%>%theme_zebra()%>%bg(bg = "#44B29C", part = "header")) %>% align(align="center", part="all")%>%fit_to_width(max_width = 8.5)%>% as_raster()
+    
+    #tft2<-ggplot()+ theme_void() + annotation_custom(rasterGrob(gft7), xmin=-Inf, xmax=Inf, ymin=-Inf, ymax=Inf) + labs(title = paste0("Table 7: Contamination Screen Summary for ",sname,". This table lists the top 25 matches for sample the library sequenced, ranked by the number of reads for each hit."), size=14)+ theme(plot.title = element_text(hjust = 0.5, margin=margin(0,0,30,0),size = 18))+margin
+    tft2<-ggplot()+ theme_void() + annotation_custom(rasterGrob(gft7), xmin=-Inf, xmax=Inf, ymin=-Inf, ymax=Inf) + labs(title = title7_wrapped)+ theme(plot.title = element_text(hjust = 0.5, margin=margin(0,0,30,0),size = 20))+margin
+    
+    grid.arrange(tft1,tft2, nrow=2, heights=c(1,4))
+    write.csv(t4p3, file=paste0(csvout, "/table6.csv"))
     } else {
       grid.arrange(gt2)
     }
@@ -592,15 +580,38 @@ for(f in ldqcp){
     start3=chunksplit[3]+3
     chunk3=text4[start3:length(text4)]
     t4p3=read.csv(text=gsub("\\.,", ",", sub("\\s*,$", "", chunk3)), header=T, sep="\t", row.names = NULL, check.names=FALSE)
+    ###Flextable implementation
+    ### combine 5A and 5B [confirmed with Kevin R that this is ok to do, no scenario where one is present and other isnt]
+    tp5<-cbind(t4p1,"",t4p2)
+    names(tp5)<-NULL
+    ##Titles test
+    table6title=strwrap(paste0("Table 5: Summary Results for ",sname,". This table lists metrics for the expected genus ",genus," & species ",species,", and the top other genus and species."),width = 175, simplify = F)
+    title6_wrapped<-sapply(table6title, paste, collapse = "\n")
+    
+    table7title7=strwrap(paste0("Table 6: Contamination Screen Summary for ",sname,". This table lists the top 25 matches for the library sequenced, ranked by the number of reads for each hit."),width = 150, simplify = F)
+    title7_wrapped<-sapply(table7title7, paste, collapse = "\n")
+    
+    ###Make Table 6
+    margin = theme(plot.margin = unit(c(1,0.5,2,0.5), "cm"))
+    
+    gft6<-autofit(flextable(tp5, col_keys = c("1","2","0","3","4"))%>%theme_zebra()%>%bg(bg = "#44B29C", j=c(1,4),part = "all") %>% width(j="3",width = 0.5) %>% bg( j = 3, bg="white", part = "all", source = j)%>%width(j=3,width=2, unit = "in")%>% align(align="center", part="all") %>% bg(bg="white", part = "header", source = i) %>% bold(j=c(1,4))%>% width(width=1, unit="in"))%>%fit_to_width(max_width = 8.5)%>% as_raster()
+    
+    #tft1<-ggplot()+ theme_void() + annotation_custom(rasterGrob(gft6), xmin=-Inf, xmax=Inf, ymin=-Inf, ymax=Inf) + labs(title = paste0("Table 6: Summary Results for ",sname,". This table lists metrics for the expected genus ",genus," & species ", species,"."), size=14)+ theme(plot.title = element_text(hjust = 0.5, margin=margin(0,0,30,0),size = 18))+ margin
+    
+    tft1<-ggplot()+ theme_void() + annotation_custom(rasterGrob(gft6), xmin=-Inf, xmax=Inf, ymin=-Inf, ymax=Inf) + labs(title = title6_wrapped)+ theme(plot.title = element_text(hjust = 0.5, margin=margin(0,0,30,0),size = 20))+ margin
+
     if(nrow(t4p3)>1){
-    ###flextable
-    gt1=autofit(flextable(t4p3[1:25,])%>%set_caption(caption = paste0("Table 6: Contamination Screen Summary for ",sname,". This table lists the top 25 matches for sample the library sequenced, ranked by the number of reads for each hit."))%>%theme_zebra()%>%bg(bg = "#44B29C", part = "header"))%>% as_raster()
-    #flextable_to_rmd(gt1)
-    gg1=ggplot() + theme_void() + annotation_custom(rasterGrob(gt1), xmin=-Inf, xmax=Inf, ymin=-Inf, ymax=Inf)
-    grid.arrange(arrangeGrob(gt2), arrangeGrob(gg1), nrow=2)
+      
+     gft7<-autofit(flextable(t4p3[1:25,])%>%theme_zebra()%>%bg(bg = "#44B29C", part = "header")) %>% align(align="center", part="all")%>%fit_to_width(max_width = 8.5)%>% as_raster()
+    
+    #tft2<-ggplot()+ theme_void() + annotation_custom(rasterGrob(gft7), xmin=-Inf, xmax=Inf, ymin=-Inf, ymax=Inf) + labs(title = paste0("Table 7: Contamination Screen Summary for ",sname,". This table lists the top 25 matches for sample the library sequenced, ranked by the number of reads for each hit."), size=14)+ theme(plot.title = element_text(hjust = 0.5, margin=margin(0,0,30,0),size = 18))+margin
+    tft2<-ggplot()+ theme_void() + annotation_custom(rasterGrob(gft7), xmin=-Inf, xmax=Inf, ymin=-Inf, ymax=Inf) + labs(title = title7_wrapped)+ theme(plot.title = element_text(hjust = 0.5, margin=margin(0,0,30,0),size = 20))+margin
+    
+    grid.arrange(tft1,tft2, nrow=2, heights=c(1,4))
+    
     write.csv(t4p3, file=paste0(csvout, "/table6.csv"))
     } else {
-      grid.arrange(gt2)
+      grid.arrange(tft1)
     }
 
 }}}}
