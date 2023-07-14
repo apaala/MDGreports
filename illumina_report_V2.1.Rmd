@@ -376,7 +376,7 @@ trimf$Lane<-gsub("L00","",trimf$Lane)
 trimtable<-trimf[,colSums(is.na(trimf))<nrow(trimf)]
 ####flextable
 if(ncol(trimtable)==15){
-ft_runinfo=autofit(flextable(trimtable)%>%set_caption(caption = "Table 5: Adaptor and Quality Trimming Summary")%>% theme_zebra()%>%bg(bg="#edd77e", j=c(4,5,6,10,11,12))%>%bg(bg = "#44B29C", part = "header")%>%add_header_row( values = c("","Read 1 Untrimmed","","Read 2 Untrimmed",""),colwidths = c(3,3,3,3,3), top = TRUE)%>% padding(padding=NULL,part = "header"))%>%align( align = "center", part = "all")%>%border_remove()%>%fit_to_width(max_width = 8.25)%>%fontsize(size = 7, part="all")
+ft_runinfo=autofit(flextable(trimtable)%>%set_caption(caption = "Table 5: Adaptor and Quality Trimming Summary")%>% theme_zebra()%>%bg(bg="#edd77e", j=c(4,5,6,10,11,12))%>%bg(bg = "#44B29C", part = "header")%>%add_header_row( values = c("","Read 1 Untrimmed","","Read 2 Untrimmed",""),colwidths = c(3,3,3,3,3), top = TRUE))%>%align( align = "center", part = "all")%>%border_remove()%>%fit_to_width(max_width = 8.25)%>%fontsize(size = 7, part="all")
 } else {
   ft_runinfo=autofit(flextable(trimtable)%>%set_caption(caption = "Table 5: Adaptor and Quality Trimming Summary")%>% theme_zebra()%>%bg(bg = "#44B29C", part = "header"))%>%align( align = "center", part = "all")%>%border_remove()%>%fit_to_width(max_width = 8.25)
 }%>%fontsize(size = 7, part="all")
@@ -451,9 +451,6 @@ Str2="For each library, a randomly selected subset of reads is screened for cont
 ##edit below for conditional printing borrowed from pacBio
 pmapf<-mapf[mapf$project==projid,]
 pmapsamples<-pmapf$sample_id
-#samples=tablef$Sample
-#pmapf<-mapf[mapf$project==projid,]
-#pmapsamples<-pmapf$sample_id
 MB_map<-pmapf
 MB_map$demux_file<-gsub("Reports.*", "", MB_map$demux_file)
 MB_map$mb_path<-paste0(MB_map$demux_file,"QC/Project_", projid, "/Sample_", MB_map$sample_id, "/QC")
@@ -468,8 +465,9 @@ for(p in MB_map$mb_path){
     }
 }
 if(flag==TRUE){
-  cat(paste0("# ",Str1,"\n"))
-  cat(paste0("## ",Str2))
+  #Temp removing this for file size issues
+  #cat(paste0("# ",Str1,"\n"))
+  #cat(paste0("## ",Str2))
 }
 ```
 
@@ -552,8 +550,8 @@ for(p in map_nodupes$mb_path){
     gft7<-autofit(flextable(t4p3[1:25,])%>%theme_zebra()%>%bg(bg = "#44B29C", part = "header")) %>% align(align="center", part="all")%>%fit_to_width(max_width = 8.5)%>% as_raster()
     
     tft2<-ggplot()+ theme_void() + annotation_custom(rasterGrob(gft7), xmin=-Inf, xmax=Inf, ymin=-Inf, ymax=Inf) + labs(title =title7_wrapped)+ theme(plot.title = element_text(hjust = 0.5, margin=margin(0,0,30,0),size = 18))+margin
-    
-    grid.arrange(tft1,tft2, nrow=2, heights=c(1,4))
+    #Uncomment to see tables. Temporary.
+    #grid.arrange(tft1,tft2, nrow=2, heights=c(1,4))
     
     write.csv(t4p1, file=paste0(csvout, "/table6a.csv"))
     write.csv(t4p2, file=paste0(csvout, "/table6b.csv"))
