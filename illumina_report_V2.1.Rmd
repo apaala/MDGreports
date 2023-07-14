@@ -441,7 +441,7 @@ ggdraw() + draw_image(fig3)
 
 ```
 
-```{r rawqc, echo=FALSE, message=FALSE, warning=FALSE, fig.align="center", results='asis', include= FALSE}
+```{r rawqc, echo=FALSE, message=FALSE, warning=FALSE, fig.align="center", results='asis'}
 #runinfo sometimes has 2 lines before relevant text. Normally just one, old runs might have 2.
 
 Str1="Raw Data QC - Contamination Screen Results"
@@ -466,8 +466,8 @@ for(p in MB_map$mb_path){
 }
 if(flag==TRUE){
   #Temp removing this for file size issues
-  #cat(paste0("# ",Str1,"\n"))
-  #cat(paste0("## ",Str2))
+  cat(paste0("# ",Str1,"\n"))
+  cat(paste0("## ",Str2))
 }
 ```
 
@@ -551,7 +551,7 @@ for(p in map_nodupes$mb_path){
     
     tft2<-ggplot()+ theme_void() + annotation_custom(rasterGrob(gft7), xmin=-Inf, xmax=Inf, ymin=-Inf, ymax=Inf) + labs(title =title7_wrapped)+ theme(plot.title = element_text(hjust = 0.5, margin=margin(0,0,30,0),size = 18))+margin
     #Uncomment to see tables. Temporary.
-    #grid.arrange(tft1,tft2, nrow=2, heights=c(1,4))
+    grid.arrange(tft1,tft2, nrow=2, heights=c(1,4))
     
     write.csv(t4p1, file=paste0(csvout, "/table6a.csv"))
     write.csv(t4p2, file=paste0(csvout, "/table6b.csv"))
