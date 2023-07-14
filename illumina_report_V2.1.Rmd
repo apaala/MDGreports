@@ -441,7 +441,7 @@ ggdraw() + draw_image(fig3)
 
 ```
 
-```{r rawqc, echo=FALSE, message=FALSE, warning=FALSE, fig.align="center", results='asis'}
+```{r rawqc, echo=FALSE, message=FALSE, warning=FALSE, fig.align="center", results='asis', include= FALSE}
 #runinfo sometimes has 2 lines before relevant text. Normally just one, old runs might have 2.
 
 Str1="Raw Data QC - Contamination Screen Results"
